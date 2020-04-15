@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:01:43 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/15 13:58:04 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/15 15:53:25 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ typedef struct	s_phil
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_must_eat;
-	int				i;
+	int				index;
 	pthread_t		*thread;
 	pthread_mutex_t	*mutex;
+	pthread_mutex_t	inc_mutex;
 }				t_phil;
 
 void	ft_putstr(char *s);

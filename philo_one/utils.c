@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:07:26 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/15 13:57:40 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/15 15:53:34 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_phil	*create_struct_pointer()
 
 	if (!(phil = malloc(sizeof(t_phil))))
 		return (NULL);
+	phil->index = -1;
 	phil->nb_philosophers = 0;
 	phil->time_to_sleep = 0;
 	phil->time_to_eat = 0;
