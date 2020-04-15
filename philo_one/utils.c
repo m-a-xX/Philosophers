@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:07:26 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/12 08:12:41 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/15 13:57:40 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,16 @@ t_phil	*create_struct_pointer()
 	phil->time_to_eat = 0;
 	phil->time_to_die = 0;
 	phil->nb_must_eat = 0;
-	phil->threads = NULL;
-	phil->mutexs = NULL;
+	phil->thread = NULL;
+	phil->mutex = NULL;
 	return (phil);
+}
+
+void	free_struct(t_phil *phil)
+{
+	free(phil->thread);
+	free(phil->mutex);
+	free(phil);
 }
 
 void	print_struct(t_phil *phil)

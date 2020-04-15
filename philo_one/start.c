@@ -6,18 +6,26 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:03:01 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/12 08:29:34 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/15 13:59:48 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-int		create_thread_mutexs(t_phil *phil)
+int		malloc_threads_mutexs(t_phil *phil)
 {
-	if (!(phil->threads = malloc(sizeof(pthread_t) * phil->nb_philosophers)))
+	int i;
+
+	i = 0;
+	if (!(phil->thread = malloc(sizeof(pthread_t) * phil->nb_philosophers)))
 		return (1);
-	if (!(phil->mutexs = malloc(sizeof(pthread_mutex_t) * phil->nb_philosophers)))
+	printf("malloc1\n");
+	if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) * phil->nb_philosophers)))
 		return (1);
+	printf("malloc2\n");
+	while (i < phil->nb_philosophers)
+		pthread_mutex_init(&phil->mutex[i++], NULL);
+	return (0);
 }
 
 int		get_args(int ac, char **av, t_phil *phil)
@@ -43,6 +51,7 @@ int		get_args(int ac, char **av, t_phil *phil)
 		ft_putstr("Arguments passed are wrong, verify them and retry\n");
 		return (1);
 	}
-	create_thread_mutexs(phil);
+	if (malloc_threads_mutexs(phil))
+		return (1);
 	return (0);
 }
