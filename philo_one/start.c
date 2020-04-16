@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:03:01 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/15 17:17:16 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/16 19:41:56 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		malloc_threads_mutexs(t_phil *phil)
 	i = 0;
 	if (!(phil->thread = malloc(sizeof(pthread_t) * phil->nb_philosophers)))
 		return (1);
-	if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) * phil->nb_philosophers)))
+	if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) *
+		phil->nb_philosophers)))
 		return (1);
 	while (i < phil->nb_philosophers)
 		pthread_mutex_init(&phil->mutex[i++], NULL);
@@ -43,8 +44,8 @@ int		get_args(int ac, char **av, t_phil *phil)
 	if (ac == 6)
 		phil->nb_must_eat = ft_atoi(av[5]);
 	else
-		phil->nb_must_eat = 0;
-	if (phil->nb_must_eat < 0 || phil->nb_philosophers < 1 ||
+		phil->nb_must_eat = -1;
+	if (phil->nb_must_eat < -2 || phil->nb_philosophers < 1 ||
 		phil->time_to_eat < 1 || phil->time_to_die < 1 ||
 		phil->time_to_sleep < 1)
 	{
