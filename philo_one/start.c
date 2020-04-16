@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:03:01 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 19:41:56 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/16 21:59:15 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int		malloc_threads_mutexs(t_phil *phil)
 	int i;
 
 	i = 0;
+	if (!(phil->last_eat = malloc(sizeof(struct timeval) *
+		phil->nb_philosophers)))
+		return (1);
 	if (!(phil->thread = malloc(sizeof(pthread_t) * phil->nb_philosophers)))
 		return (1);
 	if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) *

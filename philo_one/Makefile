@@ -6,13 +6,13 @@
 #    By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/12 07:07:02 by mavileo           #+#    #+#              #
-#    Updated: 2020/04/15 17:15:47 by mavileo          ###   ########.fr        #
+#    Updated: 2020/04/16 21:04:02 by mavileo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS			=	main.c		\
 					utils.c		\
-					utils2.c		\
+					struct.c		\
 					start.c		\
 					ft_atoi.c	\
 					print_states.c	\

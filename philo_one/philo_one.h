@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:01:43 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 19:39:19 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/16 21:45:38 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ typedef struct	s_phil
 	int				time_to_sleep;
 	int				nb_must_eat;
 	int				index;
-	int				end;
-	int				*last_eat;
+	int				dead;
 	pthread_t		*thread;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	inc_mutex;
 	pthread_mutex_t	print_mutex;
 	struct timeval	begin;
+	struct timeval	*last_eat;
 }				t_phil;
 
 void			ft_putstr(char *s);
@@ -44,11 +44,12 @@ void			print_struct(t_phil *phil);
 void			free_struct(t_phil *phil);
 void			ft_putnbr_long(long nb);
 void			ft_putchar(char c);
-double			get_time(t_phil *phil, struct timeval end);
-void			declare_fork(t_phil *phil, int index);
-void			declare_eat(t_phil *phil, int index);
-void			declare_sleep(t_phil *phil, int index);
-void			declare_think(t_phil *phil, int index);
-void			declare_died(t_phil *phil, int index);
+double			get_time(struct timeval begin, struct timeval end);
+int				declare_fork(t_phil *phil, int index);
+int				declare_eat(t_phil *phil, int index);
+int				declare_sleep(t_phil *phil, int index);
+int				declare_think(t_phil *phil, int index);
+int				declare_died(t_phil *phil, int index);
+int				check_dead(t_phil *phil);
 
 #endif
