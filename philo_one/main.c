@@ -6,16 +6,17 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 05:50:29 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/15 15:56:02 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/16 18:40:14 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+#include <sys/time.h>
 
-void	*hello(void	*arg)
+void	*philo_thread(void	*arg)
 {
-	t_phil	*phil;
-	int i;
+	t_phil			*phil;
+	int				i;
 
 	phil = (t_phil *)arg;
 	pthread_mutex_lock(&phil->inc_mutex);
@@ -27,13 +28,15 @@ void	*hello(void	*arg)
 		pthread_mutex_lock(&phil->mutex[i + 1]);
 	else
 		pthread_mutex_lock(&phil->mutex[0]);
-		
-	printf("philo %d eat\n", i);
+	declare_fork(phil, i + 1);
+	declare_fork(phil, i + 1);
+
+	declare_eat(phil, i + 1);
 	usleep(phil->time_to_eat * 1000);
-	printf("philo %d sleep\n", i);
+	declare_sleep(phil, i + 1);
 	usleep(phil->time_to_sleep * 1000);
-	printf("philo %d wake up\n\n", i);
-	
+	declare_think(phil, i + 1);
+
 	pthread_mutex_unlock(&phil->mutex[i]);
 	if (i < phil->nb_philosophers - 1)
 		pthread_mutex_unlock(&phil->mutex[i + 1]);
@@ -53,21 +56,20 @@ int		main(int ac, char **av)
 		return (1);
 	if (get_args(ac, av, phil))
 		return (1);
-	while (j < 10)
+	gettimeofday(&phil->begin, NULL);
+	while (j < 2)
 	{
 		k = 0;
 		phil->index = -1;
 		while (k < phil->nb_philosophers)
 		{
-			pthread_create(&phil->thread[k++], NULL, hello, phil);
+			pthread_create(&phil->thread[k++], NULL, philo_thread, phil);
 		}
 		k--;
 		while (k >= 0)
 			pthread_join(phil->thread[k--], NULL);
 		j++;
 	}
-
-
 	free_struct(phil);
 	return (0);	
 }

@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:07:26 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/15 15:53:34 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/15 17:00:29 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void    ft_putstr(char *s)
 {
 	while (*s)
 		write(1, s++, 1);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
 }
 
 t_phil	*create_struct_pointer()

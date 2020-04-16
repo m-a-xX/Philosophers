@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:03:01 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/15 15:47:52 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/15 17:17:16 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		malloc_threads_mutexs(t_phil *phil)
 	while (i < phil->nb_philosophers)
 		pthread_mutex_init(&phil->mutex[i++], NULL);
 	pthread_mutex_init(&phil->inc_mutex, NULL);
+	pthread_mutex_init(&phil->print_mutex, NULL);
 	return (0);
 }
 
