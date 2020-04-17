@@ -6,12 +6,12 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:01:43 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/17 20:37:17 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 20:48:34 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef philo_two_H
-# define philo_two_H
+#ifndef PHILO_TWO_H
+# define PHILO_TWO_H
 
 # include <stdlib.h>
 # include <stdio.h>
