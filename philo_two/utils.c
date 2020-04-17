@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:07:26 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 22:40:00 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:34:14 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,15 @@ double	get_time(struct timeval begin, struct timeval end)
 	elapsed = ((end.tv_sec - begin.tv_sec) * 1000000) +
 				((end.tv_usec - begin.tv_usec));
 	return (elapsed / 1000);
+}
+
+void	unlock_sems(t_phil *phil)
+{
+	int i;
+
+	i = 0;
+	while (i++ < phil->nb_philosophers)
+		sem_post(&phil->forks);
+	sem_post(&phil->inc_sem);
+	sem_post(&phil->print_sem);
 }

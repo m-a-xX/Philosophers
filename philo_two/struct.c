@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:01:19 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 23:18:49 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:33:59 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,21 @@ t_phil	*create_struct_pointer(void)
 	phil->nb_must_eat = 0;
 	phil->index = 0;
 	phil->dead = 0;
+	phil->print_dead = 0;
 	phil->thread = NULL;
 	return (phil);
 }
 
-void	destroy_sems(t_phil *phil)
+void	destroy_sems(void)
 {
-	sem_destroy(&phil->forks);
-	sem_destroy(&phil->inc_sem);
-	sem_destroy(&phil->print_sem);
+	sem_unlink("forks");
+	sem_unlink("inc");
+	sem_unlink("print");
 }
 
 void	free_struct(t_phil *phil)
 {
-	destroy_sems(phil);
+	//destroy_sems();
 	free(phil->thread);
 	free(phil->last_eat);
 	free(phil);

@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:03:19 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 23:15:03 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:34:27 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	declare_sleep(t_phil *phil, int index)
 	sem_wait(&phil->print_sem);
 	if (phil->dead || check_dead(phil))
 		return (1);
-	phil->last_eat[index - 1] = end;
 	ft_putnbr_long(get_time(phil->begin, end));
 	ft_putchar(' ');
 	ft_putnbr_long((long)index);
@@ -85,20 +84,20 @@ int	declare_think(t_phil *phil, int index)
 	return (0);
 }
 
-int	declare_died(t_phil *phil, int index)
+int	declare_died(t_phil *phil, int index, struct timeval now)
 {
-	struct timeval end;
-
-	if (phil->dead || check_dead(phil))
-		return (1);
-	gettimeofday(&end, NULL);
 	sem_wait(&phil->print_sem);
-	if (phil->dead || check_dead(phil))
+	if (phil->print_dead)
+	{
+		sem_post(&phil->print_sem);
 		return (1);
-	ft_putnbr_long(get_time(phil->begin, end));
+	}
+	ft_putnbr_long(get_time(phil->begin, now));
 	ft_putchar(' ');
 	ft_putnbr_long((long)index);
 	ft_putstr(" died\n");
 	sem_post(&phil->print_sem);
+	phil->dead = 1;
+	phil->print_dead = 1;
 	return (0);
 }

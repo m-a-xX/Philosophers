@@ -6,19 +6,21 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:01:43 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 23:20:37 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:34:57 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TWO_H
-# define PHILO_TWO_H
+#ifndef philo_two_H
+# define philo_two_H
 
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <semaphore.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <semaphore.h>
 
 typedef struct	s_phil
 {
@@ -29,6 +31,7 @@ typedef struct	s_phil
 	int				nb_must_eat;
 	int				index;
 	int				dead;
+	int				print_dead;
 	pthread_t		*thread;
 	sem_t			forks;
 	sem_t			inc_sem;
@@ -50,7 +53,8 @@ int				declare_fork(t_phil *phil, int index);
 int				declare_eat(t_phil *phil, int index);
 int				declare_sleep(t_phil *phil, int index);
 int				declare_think(t_phil *phil, int index);
-int				declare_died(t_phil *phil, int index);
+int				declare_died(t_phil *phil, int index, struct timeval now);
 int				check_dead(t_phil *phil);
+void			unlock_sems(t_phil *phil);
 
 #endif

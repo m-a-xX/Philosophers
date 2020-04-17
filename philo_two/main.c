@@ -6,12 +6,11 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 05:50:29 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 23:17:55 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:34:27 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
-#include <sys/time.h>
 
 int		check_dead(t_phil *phil)
 {
@@ -30,15 +29,10 @@ int		check_dead(t_phil *phil)
 			break ;
 		}
 	}
-	if (!dead)
+	if (!dead || phil->dead)
 		return (0);
-	sem_wait(&phil->print_sem);
-	ft_putnbr_long(get_time(phil->begin, now));
-	ft_putchar(' ');
-	ft_putnbr_long((long)dead);
-	ft_putstr(" died\n");
-	sem_post(&phil->print_sem);
-	phil->dead = 1;
+	declare_died(phil, dead, now);
+	unlock_sems(phil);
 	return (1);
 }
 
@@ -46,7 +40,6 @@ int		take_fork(t_phil *phil, int i)
 {
 	if (phil->dead || check_dead(phil))
 		return (1);
-	sem_wait(&phil->forks);
 	sem_wait(&phil->forks);
 	if (phil->dead || check_dead(phil))
 		return (1);
@@ -57,7 +50,6 @@ int		take_fork(t_phil *phil, int i)
 
 void	put_fork(t_phil *phil)
 {
-	sem_post(&phil->forks);
 	sem_post(&phil->forks);
 }
 
@@ -76,6 +68,7 @@ void	*philo_thread(void *arg)
 		return (arg);
 	if (declare_eat(phil, i + 1))
 		return (arg);
+	gettimeofday(&phil->last_eat[i], NULL);
 	usleep(phil->time_to_eat * 1000);
 	gettimeofday(&phil->last_eat[i], NULL);
 	put_fork(phil);

@@ -6,12 +6,11 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 05:50:29 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/17 09:56:57 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 10:08:36 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-#include <sys/time.h>
 
 int		check_dead(t_phil *phil)
 {
