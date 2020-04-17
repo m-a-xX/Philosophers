@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 05:50:29 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 22:03:05 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 09:56:57 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,10 @@ int		check_dead(t_phil *phil)
 			break ;
 		}
 	}
-	if (!dead)
+	if (!dead || phil->dead)
 		return (0);
-	pthread_mutex_lock(&phil->print_mutex);
-	ft_putnbr_long(get_time(phil->begin, now));
-	ft_putchar(' ');
-	ft_putnbr_long((long)dead);
-	ft_putstr(" died\n");
-	pthread_mutex_unlock(&phil->print_mutex);
-	phil->dead = 1;
+	declare_died(phil, dead, now);
+	unlock_mutexs(phil);
 	return (1);
 }
 
@@ -47,7 +42,7 @@ int		take_fork(t_phil *phil, int i)
 	if (phil->dead || check_dead(phil))
 		return (1);
 	pthread_mutex_lock(&phil->mutex[i]);
-	if (i < phil->nb_philosophers - 1)
+	if (i < phil->nb_philosophers - 1 || phil->nb_philosophers == 1)
 		pthread_mutex_lock(&phil->mutex[i + 1]);
 	else
 		pthread_mutex_lock(&phil->mutex[0]);
@@ -61,7 +56,7 @@ int		take_fork(t_phil *phil, int i)
 void	put_fork(t_phil *phil, int i)
 {
 	pthread_mutex_unlock(&phil->mutex[i]);
-	if (i < phil->nb_philosophers - 1)
+	if (i < phil->nb_philosophers - 1 || phil->nb_philosophers == 1)
 		pthread_mutex_unlock(&phil->mutex[i + 1]);
 	else
 		pthread_mutex_unlock(&phil->mutex[0]);
@@ -82,6 +77,7 @@ void	*philo_thread(void *arg)
 		return (arg);
 	if (declare_eat(phil, i + 1))
 		return (arg);
+	gettimeofday(&phil->last_eat[i], NULL);
 	usleep(phil->time_to_eat * 1000);
 	gettimeofday(&phil->last_eat[i], NULL);
 	put_fork(phil, i);

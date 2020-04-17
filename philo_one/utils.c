@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:07:26 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 21:01:37 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 09:47:30 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,15 @@ double	get_time(struct timeval begin, struct timeval end)
 	elapsed = ((end.tv_sec - begin.tv_sec) * 1000000) +
 				((end.tv_usec - begin.tv_usec));
 	return (elapsed / 1000);
+}
+
+void	unlock_mutexs(t_phil *phil)
+{
+	int i;
+
+	i = 0;
+	while (i < phil->nb_philosophers)
+		pthread_mutex_unlock(&phil->mutex[i++]);
+	pthread_mutex_unlock(&phil->inc_mutex);
+	pthread_mutex_unlock(&phil->print_mutex);
 }

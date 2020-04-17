@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:03:01 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 21:59:15 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 09:53:45 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,17 @@ int		malloc_threads_mutexs(t_phil *phil)
 		return (1);
 	if (!(phil->thread = malloc(sizeof(pthread_t) * phil->nb_philosophers)))
 		return (1);
-	if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) *
-		phil->nb_philosophers)))
-		return (1);
+	if (phil->nb_philosophers > 1)
+	{
+		if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) *
+			phil->nb_philosophers)))
+			return (1);
+	}
+	else
+	{
+		if (!(phil->mutex = malloc(sizeof(pthread_mutex_t) * 2)))
+			return (1);
+	}
 	while (i < phil->nb_philosophers)
 		pthread_mutex_init(&phil->mutex[i++], NULL);
 	pthread_mutex_init(&phil->inc_mutex, NULL);

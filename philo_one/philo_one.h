@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:01:43 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/16 21:45:38 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 09:33:08 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_phil
 	int				nb_must_eat;
 	int				index;
 	int				dead;
+	int				print_dead;
 	pthread_t		*thread;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	inc_mutex;
@@ -49,7 +50,8 @@ int				declare_fork(t_phil *phil, int index);
 int				declare_eat(t_phil *phil, int index);
 int				declare_sleep(t_phil *phil, int index);
 int				declare_think(t_phil *phil, int index);
-int				declare_died(t_phil *phil, int index);
+int				declare_died(t_phil *phil, int index, struct timeval now);
 int				check_dead(t_phil *phil);
+void			unlock_mutexs(t_phil *phil);
 
 #endif
