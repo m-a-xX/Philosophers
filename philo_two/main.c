@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 05:50:29 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/17 11:34:27 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 20:45:50 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		take_fork(t_phil *phil, int i)
 {
 	if (phil->dead || check_dead(phil))
 		return (1);
-	sem_wait(&phil->forks);
+	sem_wait(phil->forks);
 	if (phil->dead || check_dead(phil))
 		return (1);
 	declare_fork(phil, i + 1);
@@ -50,7 +50,7 @@ int		take_fork(t_phil *phil, int i)
 
 void	put_fork(t_phil *phil)
 {
-	sem_post(&phil->forks);
+	sem_post(phil->forks);
 }
 
 void	*philo_thread(void *arg)
@@ -61,9 +61,9 @@ void	*philo_thread(void *arg)
 	phil = (t_phil *)arg;
 	if (phil->dead || check_dead(phil))
 		return (arg);
-	sem_wait(&phil->inc_sem);
+	sem_wait(phil->inc_sem);
 	i = ++phil->index;
-	sem_post(&phil->inc_sem);
+	sem_post(phil->inc_sem);
 	if (take_fork(phil, i))
 		return (arg);
 	if (declare_eat(phil, i + 1))

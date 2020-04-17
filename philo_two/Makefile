@@ -6,7 +6,7 @@
 #    By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/12 07:07:02 by mavileo           #+#    #+#              #
-#    Updated: 2020/04/17 10:45:51 by mavileo          ###   ########.fr        #
+#    Updated: 2020/04/17 20:25:40 by mavileo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS			= $(SRCS:.c=.o)
 CC				= gcc
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror -I.
-LIBS			= -lpthread
+LIBS			= -lpthread -lrt
 
 NAME			= philo_two
 

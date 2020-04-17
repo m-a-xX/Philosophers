@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:03:01 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/17 11:33:27 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 20:46:38 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,36 @@
 
 int		malloc_threads_mutexs(t_phil *phil)
 {
+	int i = 0;
 	if (!(phil->last_eat = malloc(sizeof(struct timeval) *
 		phil->nb_philosophers)))
 		return (1);
 	if (!(phil->thread = malloc(sizeof(pthread_t) * phil->nb_philosophers)))
 		return (1);
-	sem_init(&phil->forks, 0, phil->nb_philosophers / 2);
-	sem_init(&phil->inc_sem, 0, 1);
-	sem_init(&phil->print_sem, 0, 1);
+	phil->forks = sem_open("pForks", O_CREAT, 0644, phil->nb_philosophers / 2);
+	while (i < phil->nb_philosophers / 2)
+	{
+		sem_post(phil->forks);
+		sem_getvalue(phil->forks, &i);
+	}
+	phil->inc_sem = sem_open("pInc", O_CREAT, 0644, 1);
+	phil->print_sem = sem_open("pPrint", O_CREAT, S_IRWXU, 1);
+	sem_getvalue(phil->print_sem, &i);
+	printf("%d\n", i);
+	if (i == 0)
+	{
+		sem_post(phil->inc_sem);
+		sem_post(phil->print_sem);
+	}
+	printf("%d\n", i);
+	if (i == 2)
+	{
+		sem_wait(phil->inc_sem);
+		sem_wait(phil->print_sem);
+	}
+ 	if (phil->forks == SEM_FAILED || phil->inc_sem == SEM_FAILED ||
+		phil->print_sem == SEM_FAILED)
+		return (1);
 	return (0);
 }
 

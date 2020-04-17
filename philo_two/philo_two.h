@@ -6,7 +6,7 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 06:01:43 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/17 11:34:57 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/17 20:37:17 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <semaphore.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <semaphore.h>
 
 typedef struct	s_phil
 {
@@ -33,9 +33,9 @@ typedef struct	s_phil
 	int				dead;
 	int				print_dead;
 	pthread_t		*thread;
-	sem_t			forks;
-	sem_t			inc_sem;
-	sem_t			print_sem;
+	sem_t			*forks;
+	sem_t			*inc_sem;
+	sem_t			*print_sem;
 	struct timeval	begin;
 	struct timeval	*last_eat;
 }				t_phil;
