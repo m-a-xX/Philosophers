@@ -6,11 +6,11 @@
 /*   By: mavileo <mavileo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 21:01:19 by mavileo           #+#    #+#             */
-/*   Updated: 2020/04/18 15:28:22 by mavileo          ###   ########.fr       */
+/*   Updated: 2020/04/18 15:31:15 by mavileo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 t_phil	*create_struct_pointer(void)
 {
@@ -23,10 +23,9 @@ t_phil	*create_struct_pointer(void)
 	phil->time_to_eat = 0;
 	phil->time_to_die = 0;
 	phil->nb_must_eat = 0;
-	phil->index = -1;
 	phil->dead = 0;
 	phil->print_dead = 0;
-	phil->thread = NULL;
+	phil->pids = NULL;
 	phil->forks = NULL;
 	phil->inc_sem = NULL;
 	phil->print_sem = NULL;
@@ -44,8 +43,8 @@ void	destroy_sems(void)
 void	free_struct(t_phil *phil)
 {
 	destroy_sems();
-	free(phil->thread);
 	free(phil->last_eat);
+	free(phil->pids);
 	free(phil);
 }
 
