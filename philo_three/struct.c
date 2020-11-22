@@ -47,12 +47,3 @@ void	free_struct(t_phil *phil)
 	free(phil->pids);
 	free(phil);
 }
-
-void	print_struct(t_phil *phil)
-{
-	printf("nb_philosophers : %d\n", phil->nb_philosophers);
-	printf("time_to_die : %d\n", phil->time_to_die);
-	printf("time_to_eat : %d\n", phil->time_to_eat);
-	printf("time_to_sleep : %d\n", phil->time_to_sleep);
-	printf("nb_must_eat : %d\n", phil->nb_must_eat);
-}

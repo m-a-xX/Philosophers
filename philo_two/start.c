@@ -39,7 +39,7 @@ void	correct_sems(t_phil *phil)
 		sem_wait(phil->print_sem);
 }
 
-int		malloc_threads_mutexs(t_phil *phil)
+int		malloc_threads_sems(t_phil *phil)
 {
 	if (!(phil->last_eat = malloc(sizeof(struct timeval) *
 		phil->nb_philosophers)))
@@ -79,7 +79,7 @@ int		get_args(int ac, char **av, t_phil *phil)
 		ft_putstr("Arguments passed are wrong, verify them and retry\n");
 		return (1);
 	}
-	if (malloc_threads_mutexs(phil))
+	if (malloc_threads_sems(phil))
 		return (1);
 	return (0);
 }
